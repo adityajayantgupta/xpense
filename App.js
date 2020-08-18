@@ -5,9 +5,9 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {firebase} from './app/firebase/config';
 
 // import views
-import MainContentContainer from './app/views/MainContentContainer';
-import Login from './app/views/Login';
-import Signup from './app/views/Signup';
+import MainContentContainer from './app/screens/MainContentContainer';
+import Login from './app/screens/Login';
+import Signup from './app/screens/Signup';
 
 const Stack = createStackNavigator();
 

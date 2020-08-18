@@ -1,5 +1,6 @@
 import * as React from 'react';
-import {StyleSheet, Text, View, FlatList} from 'react-native';
+import {StyleSheet, Text, View, FlatList, TouchableOpacity} from 'react-native';
+import {firebase} from '../firebase/config';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const DATA = [
@@ -33,14 +34,20 @@ const Item = ({title}) => (
 
 const renderItem = ({item}) => <Item title={item.title} />;
 
-function Home() {
+export default function Home({navigation}) {
+  const handleLogout = () => {
+    firebase.auth().signOut();
+    navigation.navigate('Login');
+  };
   return (
     <View style={styles.container}>
       <View style={styles.background} />
       <View style={styles.main}>
         <View style={styles.topBarContainer}>
           <Text style={styles.searchContainer}>
-            <Ionicons name="search" style={styles.topBarIcon} />
+            <TouchableOpacity onPress={() => handleLogout()}>
+              <Ionicons name="search" style={styles.topBarIcon} />
+            </TouchableOpacity>
           </Text>
           <Text style={styles.menuContainer}>
             <Ionicons name="menu" style={styles.topBarIcon} />
@@ -122,5 +129,3 @@ const styles = StyleSheet.create({
     paddingTop: 10,
   },
 });
-
-export default Home;

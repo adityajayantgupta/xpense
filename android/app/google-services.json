@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "352081677363",
+    "firebase_url": "https://xpense-fae94.firebaseio.com",
+    "project_id": "xpense-fae94",
+    "storage_bucket": "xpense-fae94.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:352081677363:android:0b62a56e36ad5e5269e746",
+        "android_client_info": {
+          "package_name": "com.test"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "352081677363-0f4o9lalf5epjfqvbjcectrribohjrkt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.test",
+            "certificate_hash": "c2daaf7d1f87c5ae4d8b4268de2f56986cb494d3"
+          }
+        },
+        {
+          "client_id": "352081677363-nbfd5i0rle6lmggr05e94ltrg49m92ji.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANhwez6JdmY7wkiWq6LS_ZF55hYCdceC0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "352081677363-nbfd5i0rle6lmggr05e94ltrg49m92ji.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

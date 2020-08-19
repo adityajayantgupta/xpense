@@ -1,7 +1,14 @@
 import * as React from 'react';
-import {StyleSheet, Text, View, FlatList, TouchableOpacity} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native';
 import {firebase} from '../firebase/config';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import TransactionTimeline from '../components/TransactionTimeline';
 
 const DATA = [
   {
@@ -53,18 +60,13 @@ export default function Home({navigation}) {
             <Ionicons name="menu" style={styles.topBarIcon} />
           </Text>
         </View>
-        <View style={styles.mainContentContainer}>
+        <ScrollView style={styles.mainContentContainer}>
           <Text style={styles.mainContentHeader}>Overview</Text>
           <View style={styles.overviewChart}></View>
           <View style={styles.overviewListContainer}>
-            <FlatList
-              data={DATA}
-              renderItem={renderItem}
-              keyExtractor={(item) => item.id}
-              style={styles.overviewList}
-            />
+            <TransactionTimeline />
           </View>
-        </View>
+        </ScrollView>
       </View>
     </View>
   );

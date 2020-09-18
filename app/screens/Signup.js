@@ -34,9 +34,12 @@ export default function Signup({navigation}) {
           id: uid,
           email,
           fullName,
+          transactions: [],
         };
-        const usersRef = firebase.firestore().collection('users');
-        usersRef
+        console.log(data);
+        firebase
+          .firestore()
+          .collection('users')
           .doc(uid)
           .set(data)
           .then(() => {

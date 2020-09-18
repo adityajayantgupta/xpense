@@ -8,12 +8,13 @@ const firebaseConfig = {
   databaseURL: 'https://xpense-fae94.firebaseio.com',
   projectId: 'xpense-fae94',
   storageBucket: 'xpense-fae94.appspot.com',
-  messagingSenderId: '12345-insert-yourse',
+  messagingSenderId: '352081677363',
   appId: '1:352081677363:android:0b62a56e36ad5e5269e746',
 };
 
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
+  firebase.firestore().settings({experimentalForceLongPolling: true});
 }
 
 export {firebase};

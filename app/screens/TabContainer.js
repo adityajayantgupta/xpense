@@ -1,14 +1,15 @@
 import * as React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import Home from './Home';
+import Home from './Home/Home';
 import Schedule from './Schedule';
 import Report from './Report';
+import {color} from 'react-native-reanimated';
+import colors from '../shared/globalVars';
 
 const Tab = createBottomTabNavigator();
-export default function MainContentContainer() {
+export default function TabContainer() {
   return (
     <Tab.Navigator
       screenOptions={({route}) => ({
@@ -22,13 +23,12 @@ export default function MainContentContainer() {
           } else if (route.name === 'Report') {
             iconName = focused ? 'pie-chart' : 'pie-chart-outline';
           }
-          // You can return any component that you like here!
           return <Ionicons name={iconName} size={size} color={color} />;
         },
       })}
       tabBarOptions={{
         showLabel: false,
-        activeTintColor: 'tomato',
+        activeTintColor: colors.highlight,
         inactiveTintColor: 'gray',
         style: {height: 65},
       }}>

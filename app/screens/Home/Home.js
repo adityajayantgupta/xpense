@@ -1,50 +1,28 @@
 import * as React from 'react';
 import {
-  StyleSheet,
-  Text,
   View,
-  ScrollView,
+  Text,
   TouchableOpacity,
+  ScrollView,
+  StyleSheet,
 } from 'react-native';
-import {firebase} from '../firebase/config';
+import {firebase} from '../../firebase/config';
+import TransactionTimeline from '../../components/TransactionTimeline';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import TransactionTimeline from '../components/TransactionTimeline';
-
-const DATA = [
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    title: 'First Item',
-  },
-  {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    title: 'Second Item',
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Third Item',
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29972',
-    title: 'Third Item',
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29372',
-    title: 'Third Item',
-  },
-];
-
-const Item = ({title}) => (
-  <View style={styles.item}>
-    <Text style={styles.title}>{title}</Text>
-  </View>
-);
-
-const renderItem = ({item}) => <Item title={item.title} />;
+import colors from '../../shared/globalVars';
 
 export default function Home({navigation}) {
   const handleLogout = () => {
-    firebase.auth().signOut();
-    navigation.navigate('Login');
+    firebase
+      .auth()
+      .signOut()
+      .then((error) => {
+        if (error) {
+          alert('Error signing out!');
+        } else {
+          navigation.navigate('Login');
+        }
+      });
   };
   return (
     <View style={styles.container}>
@@ -57,6 +35,10 @@ export default function Home({navigation}) {
             </TouchableOpacity>
           </Text>
           <Text style={styles.menuContainer}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('addItemScreen')}>
+              <Ionicons name="add-outline" style={styles.topBarIcon} />
+            </TouchableOpacity>
             <Ionicons name="menu" style={styles.topBarIcon} />
           </Text>
         </View>
@@ -80,7 +62,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     height: '40%',
     width: '100%',
-    backgroundColor: '#416EEE',
+    backgroundColor: colors.primary,
   },
   main: {
     padding: 30,
@@ -96,6 +78,7 @@ const styles = StyleSheet.create({
   menuContainer: {
     flex: 1,
     textAlign: 'right',
+    alignItems: 'center',
   },
   topBarIcon: {
     color: '#ffffff',
@@ -129,5 +112,10 @@ const styles = StyleSheet.create({
   },
   overviewList: {
     paddingTop: 10,
+  },
+  actionButtonIcon: {
+    fontSize: 20,
+    height: 22,
+    color: 'white',
   },
 });

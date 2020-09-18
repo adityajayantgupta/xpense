@@ -7,10 +7,8 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {Picker} from '@react-native-community/picker';
-import {firebase} from '../../firebase/config';
-import colors from '../../shared/globalVars';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
+import {firebase} from '../../../firebase/config';
+import colors from '../../../shared/globalVars';
 
 const db = firebase.firestore();
 
@@ -78,7 +76,9 @@ export default function addItemScreen({navigation}) {
   const handleCancelItem = () => {
     navigation.navigate('App');
   };
-
+  const handleCategory = () => {
+    navigation.navigate('categoryScreen');
+  };
   return (
     <View style={styles.container}>
       <KeyboardAwareScrollView
@@ -149,27 +149,13 @@ export default function addItemScreen({navigation}) {
             autoCapitalize="words"
           />
           {/* Transaction category picker element */}
-          <Picker
-            selectedValue={category}
-            style={styles.categories}
-            onValueChange={(itemValue, itemIndex) => setCategory(itemValue)}>
-            <Picker.Item label="Miscellaneous" value="miscellaneous" />
-            <Picker.Item label="Housing" value="housing" />
-            <Picker.Item label="Transportation" value="transportation" />
-            <Picker.Item label="Food" value="food" />
-            <Picker.Item label="Utilities" value="utilities" />
-            <Picker.Item label="Insurance" value="insurance" />
-            <Picker.Item
-              label="Medical and Healthcare"
-              value="medical and healthcare"
-            />
-            <Picker.Item
-              label="Debts and Investment"
-              value="debts and investment"
-            />
-            <Picker.Item label="Personal Spending" value="personal spending" />
-            <Picker.Item label="Entertainment" value="entertainment" />
-          </Picker>
+          <TouchableOpacity
+            style={[styles.button, styles.buttonInActivated]}
+            onPress={() => handleCategory()}>
+            <Text style={[styles.buttonTitle, styles.buttonInActivatedTitle]}>
+              Select Category
+            </Text>
+          </TouchableOpacity>
         </View>
         <View style={styles.transactionTypeContainer}>
           {/* cancel button */}

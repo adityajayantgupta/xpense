@@ -5,7 +5,6 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Home from './Home/Home';
 import Schedule from './Schedule';
 import Report from './Report';
-import {color} from 'react-native-reanimated';
 import colors from '../shared/globalVars';
 
 const Tab = createBottomTabNavigator();

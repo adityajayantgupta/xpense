@@ -35,6 +35,7 @@ export default function Signup({navigation}) {
           email,
           fullName,
           transactions: [],
+          categories: [],
         };
         console.log(data);
         firebase

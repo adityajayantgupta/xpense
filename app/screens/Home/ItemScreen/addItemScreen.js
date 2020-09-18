@@ -7,8 +7,8 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {firebase} from '../../firebase/config';
-import colors from '../../shared/globalVars';
+import {firebase} from '../../../firebase/config';
+import colors from '../../../shared/globalVars';
 
 const db = firebase.firestore();
 

@@ -7,7 +7,7 @@ import {firebase} from './app/firebase/config';
 import TabContainer from './app/screens/TabContainer';
 import Login from './app/screens/Login';
 import Signup from './app/screens/Signup';
-import addItemScreen from './app/screens/Home/addItemScreen';
+import addItemScreen from './app/screens/Home/ItemScreen/addItemScreen';
 import categoryScreen from './app/screens/Home/ItemScreen/categoryScreen';
 import {LogBox} from 'react-native';
 import {decode, encode} from 'base-64';

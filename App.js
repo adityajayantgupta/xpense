@@ -9,6 +9,7 @@ import Login from './app/screens/Login';
 import Signup from './app/screens/Signup';
 import addItemScreen from './app/screens/Home/ItemScreen/addItemScreen';
 import categoryScreen from './app/screens/Home/ItemScreen/categoryScreen';
+import createCategoryScreen from './app/screens/Home/ItemScreen/createCategoryScreen';
 import {LogBox} from 'react-native';
 import {decode, encode} from 'base-64';
 if (!global.btoa) {
@@ -54,6 +55,10 @@ export default function App() {
         <Stack.Screen name="Signup" component={Signup} />
         <Stack.Screen name="addItemScreen" component={addItemScreen} />
         <Stack.Screen name="categoryScreen" component={categoryScreen} />
+        <Stack.Screen
+          name="createCategoryScreen"
+          component={createCategoryScreen}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

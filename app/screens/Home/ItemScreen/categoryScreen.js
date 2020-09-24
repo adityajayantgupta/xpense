@@ -1,141 +1,129 @@
 import React, {useState, useEffect} from 'react';
 import {View, Text, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {get} from 'react-native/Libraries/Utilities/PixelRatio';
 import {firebase} from '../../../firebase/config';
-import colors from '../../../shared/globalVars';
+import vars from '../../../shared/globalVars';
 
-const db = firebase.firestore();
-
-export default function addItemScreen({navigation}) {
+export default function categoryScreen({route, navigation}) {
   const [categories, setCategories] = useState([]);
-  const defaultCategories = [
-    {
-      name: 'Housing',
-      iconName: 'home-outline',
-    },
-    {
-      name: 'Transportation',
-      iconName: 'bus-outline',
-    },
-    {
-      name: 'Food',
-      iconName: 'food-outline',
-    },
-    {
-      name: 'Utilities',
-      iconName: 'flash-outline',
-    },
-    {
-      name: 'Insurance',
-      iconName: 'shield-checkmark-outline',
-    },
-    {
-      name: 'Healthcare',
-      iconName: 'medkit-outline',
-    },
-    {
-      name: 'Finance',
-      iconName: 'cash-outline',
-    },
-    {
-      name: 'Entertainment',
-      iconName: 'film-outline',
-    },
-    {
-      name: 'Miscellanenous',
-      iconName: 'bookmark-outline',
-    },
-  ];
+  const defaultCategories = vars.defaultCategories;
 
-  // Get all categories from user doc
+  // Concatenate user categories with default categories
   useEffect(() => {
     let isSubscribed = true;
-    db.collection('users')
+    firebase
+      .firestore()
+      .collection('users')
       .doc(firebase.auth().currentUser.uid)
       .get()
       .then((doc) => {
-        setCategories(doc.data().categories);
+        const allCategories = defaultCategories.concat(
+          doc.data().userCategories,
+        );
+        setCategories(allCategories);
       })
       .catch((err) => console.log(err));
     return () => (isSubscribed = false); // unsubscribe on unmount
   }, []);
 
+  const handleCategorySelection = (categoryName) => {
+    const category = categories.find((el) => el.name == categoryName);
+    route.params.onSelect(category); // pass selected category back to parent
+    navigation.navigate('addItemScreen');
+  };
+
   const renderItem = ({item, index}) => {
     return (
-      <View>
-        <Text>{item.name}</Text>
-        <Ionicons name={item.iconName} />
-      </View>
+      <TouchableOpacity onPress={() => handleCategorySelection(item.name)}>
+        <Ionicons
+          name={item.iconName}
+          style={[
+            styles.categoryIcon,
+            {
+              backgroundColor: vars.hexToRGBA(item.color, 0.3),
+              color: '#' + item.color,
+            },
+          ]}
+        />
+        <Text style={styles.categoryIconTitle}>{item.name}</Text>
+      </TouchableOpacity>
     );
   };
 
   return (
     <View style={styles.container}>
+      <Text style={styles.header}>Categories</Text>
       <FlatList
         data={categories}
         renderItem={renderItem}
         keyExtractor={(item, index) => index.toString()}
-        numColumns="3"></FlatList>
+        numColumns="3"
+        contentContainerStyle={{paddingBottom: 100}}
+        showsVerticalScrollIndicator={false}></FlatList>
+      <View style={styles.footer}>
+        <TouchableOpacity
+          style={styles.footerButton}
+          onPress={() => navigator.navigate('createCategoryScreen')}>
+          <Text style={styles.footerButtonTitle}>Create Category</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    height: '100%',
+    paddingTop: 30,
+    alignItems: 'center',
     padding: 10,
+    paddingBottom: 0,
     backgroundColor: '#ffffff',
   },
-  transactionTypeContainer: {
+  header: {
+    marginBottom: 20,
+    fontSize: 30,
+    fontWeight: '100',
+    color: '#aaaaaa',
+  },
+  categoryItemContainer: {
+    margin: 10,
+    backgroundColor: '#ffffff',
+  },
+  categoryIcon: {
+    margin: 20,
+    aspectRatio: 1,
+    width: 70,
+    padding: 10,
+    borderRadius: 20,
+    fontSize: 40,
+    textAlign: 'center',
+  },
+  categoryIconTitle: {
+    textAlign: 'center',
+    color: vars.colors.dkGray,
+  },
+  footer: {
+    position: 'absolute',
+    bottom: 0,
+    width: '105%',
     flex: 1,
     flexDirection: 'row',
+    padding: 0,
   },
-  input: {
-    height: 48,
-    borderRadius: 5,
-    overflow: 'hidden',
-    backgroundColor: 'white',
-    margin: 20,
-    marginVertical: 40,
-    fontSize: 18,
-  },
-  button: {
+  footerButton: {
     flex: 1,
-    margin: 20,
-    height: 48,
-    borderRadius: 5,
+    margin: 50,
+    marginBottom: 30,
+    paddingVertical: 20,
     alignItems: 'center',
-    justifyContent: 'center',
+    borderRadius: 20,
+    backgroundColor: vars.colors.highlight,
+    elevation: 5,
   },
-  buttonInActivated: {
-    backgroundColor: colors.ltGray,
-  },
-  buttonActivated: {
-    backgroundColor: colors.highlight,
-  },
-  buttonTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  buttonInActivatedTitle: {
-    color: colors.dkGray,
-  },
-  buttonActivatedTitle: {
+  footerButtonTitle: {
     color: '#ffffff',
-  },
-  amtCatContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    paddingHorizontal: 20,
-    marginVertical: 40,
-  },
-  amount: {
-    flex: 1,
-    fontSize: 18,
-  },
-  categories: {
-    flex: 1,
-    marginLeft: 10,
+    fontWeight: 'bold',
+    fontSize: 16,
   },
 });

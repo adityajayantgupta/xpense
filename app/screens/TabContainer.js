@@ -1,14 +1,13 @@
-import * as React from 'react';
+import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
 import Home from './Home/Home';
 import Schedule from './Schedule';
 import Report from './Report';
-import colors from '../shared/globalVars';
+import vars from '../shared/globalVars';
 
 const Tab = createBottomTabNavigator();
-export default function TabContainer() {
+export default function TabContainer({navigation}) {
   return (
     <Tab.Navigator
       screenOptions={({route}) => ({
@@ -27,7 +26,7 @@ export default function TabContainer() {
       })}
       tabBarOptions={{
         showLabel: false,
-        activeTintColor: colors.highlight,
+        activeTintColor: vars.colors.highlight,
         inactiveTintColor: 'gray',
         style: {height: 65},
       }}>

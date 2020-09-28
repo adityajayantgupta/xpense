@@ -8,20 +8,25 @@ import {
 } from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {firebase} from '../../../firebase/config';
-import colors from '../../../shared/globalVars';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import vars from '../../../shared/globalVars';
 
 const db = firebase.firestore();
 
 const dataModel = {
   date: 0,
   amount: 0,
-  category: 'uncategoriezed',
+  category: 'uncategorized',
   title: '',
   type: 'spent',
 };
 
 export default function addItemScreen({navigation}) {
-  const [category, setCategory] = useState('miscellaneous');
+  const [category, setCategory] = useState({
+    name: 'Select Category',
+    iconName: 'checkmark-circle-outline',
+    color: vars.colors.ltGray,
+  });
   const [title, setTitle] = useState('');
   const [amount, setAmount] = useState('0');
   const [selectedType, setSelectedType] = useState('spent');
@@ -77,7 +82,7 @@ export default function addItemScreen({navigation}) {
     navigation.navigate('App');
   };
   const handleCategory = () => {
-    navigation.navigate('categoryScreen');
+    navigation.navigate('categoryScreen', {onSelect: setCategory});
   };
   return (
     <View style={styles.container}>
@@ -132,7 +137,7 @@ export default function addItemScreen({navigation}) {
           placeholderTextColor="#aaaaaa"
           onChangeText={(text) => setTitle(text)}
           value={title}
-          underlineColorAndroid={colors.highlight}
+          underlineColorAndroid={vars.colors.highlight}
           autoCapitalize="words"
         />
         {/* Wrap amount text input and category picker into one line */}
@@ -145,33 +150,46 @@ export default function addItemScreen({navigation}) {
             placeholderTextColor="#aaaaaa"
             onChangeText={(text) => setAmount(sanitizeAmountInput(text))}
             value={amount}
-            underlineColorAndroid={colors.highlight}
+            underlineColorAndroid={vars.colors.highlight}
             autoCapitalize="words"
           />
           {/* Transaction category picker element */}
           <TouchableOpacity
-            style={[styles.button, styles.buttonInActivated]}
+            style={[
+              styles.button,
+              styles.buttonInActivated,
+              {backgroundColor: category.color},
+            ]}
             onPress={() => handleCategory()}>
-            <Text style={[styles.buttonTitle, styles.buttonInActivatedTitle]}>
-              Select Category
+            <Ionicons name={category.iconName} style={styles.categoryIcon} />
+            <Text
+              style={[
+                styles.buttonTitle,
+                styles.buttonInActivatedTitle,
+                styles.categoryButtonTitle,
+              ]}>
+              {vars.truncate(category.name, 10)}
             </Text>
           </TouchableOpacity>
         </View>
-        <View style={styles.transactionTypeContainer}>
-          {/* cancel button */}
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => handleCancelItem()}>
-            <Text style={styles.buttonTitle}>cancel</Text>
-          </TouchableOpacity>
-          {/* Add button */}
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => handleAddItem()}>
-            <Text style={styles.buttonTitle}>Add</Text>
-          </TouchableOpacity>
-        </View>
       </KeyboardAwareScrollView>
+      <View style={styles.footer}>
+        {/* cancel button */}
+        <TouchableOpacity
+          style={styles.footerButton}
+          onPress={() => handleCancelItem()}>
+          <Ionicons name="close-outline" style={styles.footerButtonTitle} />
+        </TouchableOpacity>
+        {/* Add button */}
+        <TouchableOpacity
+          style={[styles.footerButton, styles.buttonActivated]}
+          onPress={() => handleAddItem()}>
+          <Ionicons
+            name="checkmark-outline"
+            style={[styles.footerButtonTitle, styles.buttonActivatedTitle]}
+          />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -197,27 +215,41 @@ const styles = StyleSheet.create({
   },
   button: {
     flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
     margin: 20,
     height: 48,
     borderRadius: 5,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   buttonInActivated: {
-    backgroundColor: colors.ltGray,
+    backgroundColor: vars.colors.ltGray,
   },
   buttonActivated: {
-    backgroundColor: colors.highlight,
+    backgroundColor: vars.colors.highlight,
   },
   buttonTitle: {
+    flex: 1,
     fontSize: 16,
     fontWeight: 'bold',
+    textAlign: 'center',
   },
   buttonInActivatedTitle: {
-    color: colors.dkGray,
+    color: vars.colors.dkGray,
   },
   buttonActivatedTitle: {
     color: '#ffffff',
+  },
+  categoryButtonTitle: {
+    flex: 2,
+    textAlign: 'left',
+    color: '#000000',
+  },
+  categoryIcon: {
+    flex: 1,
+    width: 26,
+    paddingLeft: 10,
+    fontSize: 26,
   },
   amtCatContainer: {
     flex: 1,
@@ -232,5 +264,24 @@ const styles = StyleSheet.create({
   categories: {
     flex: 1,
     marginLeft: 10,
+  },
+  footer: {
+    position: 'absolute',
+    bottom: 0,
+    width: '105%',
+    flex: 1,
+    flexDirection: 'row',
+    padding: 0,
+  },
+  footerButton: {
+    flex: 1,
+    margin: 0,
+    paddingVertical: 20,
+    alignItems: 'center',
+    borderRadius: 0,
+    backgroundColor: vars.colors.ltGray,
+  },
+  footerButtonTitle: {
+    fontSize: 26,
   },
 });

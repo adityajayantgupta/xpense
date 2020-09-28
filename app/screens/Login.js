@@ -22,7 +22,7 @@ export default function Login({navigation}) {
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
-      .then((response) => {
+      .then((user) => {
         navigation.navigate('App');
       })
       .catch((error) => {

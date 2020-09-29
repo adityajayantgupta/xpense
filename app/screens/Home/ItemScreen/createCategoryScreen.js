@@ -37,14 +37,14 @@ export default function createCategoryScreen({navigation}) {
     dataModel.iconName = 'person';
     dataModel.color = color;
     // Get the user data doc
-    db.collection('users')
+    vars.docRef
       .doc(firebase.auth().currentUser.uid)
       .get()
       .then((doc) => {
         // Update the user data doc
         var userData = doc.data();
         userData.categories.push(dataModel);
-        db.collection('users')
+        vars.docRef
           .doc(firebase.auth().currentUser.uid)
           .set(userData)
           .then(() => {

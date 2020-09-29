@@ -11,8 +11,6 @@ import {firebase} from '../../../firebase/config';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import vars from '../../../shared/globalVars';
 
-const db = firebase.firestore();
-
 const dataModel = {
   date: 0,
   amount: 0,
@@ -56,14 +54,14 @@ export default function addItemScreen({navigation}) {
     dataModel.amount = sanitizeAmountInput(amount);
     dataModel.type = selectedType;
     // Get the user data doc
-    db.collection('users')
+    vars.docRef
       .doc(firebase.auth().currentUser.uid)
       .get()
       .then((doc) => {
         // Update the user data doc
         var userData = doc.data();
         userData.transactions.push(dataModel);
-        db.collection('users')
+        vars.docRef
           .doc(firebase.auth().currentUser.uid)
           .set(userData)
           .then(() => {

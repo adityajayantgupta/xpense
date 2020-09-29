@@ -1,3 +1,4 @@
+import {firebase} from '../firebase/config';
 const vars = {
   colors: {
     primary: '#416EEE',
@@ -72,6 +73,7 @@ const vars = {
     var RGBA = `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, ${alpha})`;
     return RGBA;
   },
+  docRef: firebase.firestore().collection('users'),
 };
 
 export default vars;

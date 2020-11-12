@@ -2,7 +2,7 @@ import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Home from './Home/Home';
-import Schedule from './Schedule';
+import AutomatedTransactions from './AutomatedTransactions/AutomatedTransactions';
 import Report from './Report';
 import vars from '../shared/globalVars';
 
@@ -31,7 +31,7 @@ export default function TabContainer({navigation}) {
         style: {height: 65},
       }}>
       <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Schedule" component={Schedule} />
+      <Tab.Screen name="Schedule" component={AutomatedTransactions} />
       <Tab.Screen name="Report" component={Report} />
     </Tab.Navigator>
   );

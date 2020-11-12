@@ -28,7 +28,6 @@ export default function addItemScreen({navigation}) {
   const [title, setTitle] = useState('');
   const [amount, setAmount] = useState('0');
   const [selectedType, setSelectedType] = useState('spent');
-
   const sanitizeAmountInput = (text) => {
     // only allow input of upto 2 digits after the decimal point
     if (text.indexOf('.') !== -1) {
@@ -49,7 +48,7 @@ export default function addItemScreen({navigation}) {
     }
     // Copy form values to the datamodel object
     dataModel.date = Date.now();
-    dataModel.category = category;
+    dataModel.category = category.name;
     dataModel.title = title;
     dataModel.amount = sanitizeAmountInput(amount);
     dataModel.type = selectedType;
@@ -82,6 +81,7 @@ export default function addItemScreen({navigation}) {
   const handleCategory = () => {
     navigation.navigate('categoryScreen', {onSelect: setCategory});
   };
+
   return (
     <View style={styles.container}>
       <KeyboardAwareScrollView

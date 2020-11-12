@@ -11,8 +11,6 @@ import {firebase} from '../../../firebase/config';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import vars from '../../../shared/globalVars';
 
-const db = firebase.firestore();
-
 const dataModel = {
   date: 0,
   amount: 0,

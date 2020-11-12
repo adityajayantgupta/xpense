@@ -29,7 +29,7 @@ export default function categoryScreen({route, navigation}) {
   const handleCategorySelection = (categoryName) => {
     const category = categories.find((el) => el.name == categoryName);
     route.params.onSelect(category); // pass selected category back to parent
-    navigation.navigate('addItemScreen');
+    navigation.goBack();
   };
 
   const renderItem = ({item, index}) => {
@@ -41,7 +41,7 @@ export default function categoryScreen({route, navigation}) {
             styles.categoryIcon,
             {
               backgroundColor: vars.hexToRGBA(item.color, 0.3),
-              color: '#' + item.color,
+              color: item.color,
             },
           ]}
         />
@@ -63,7 +63,7 @@ export default function categoryScreen({route, navigation}) {
       <View style={styles.footer}>
         <TouchableOpacity
           style={styles.footerButton}
-          onPress={() => navigator.navigate('createCategoryScreen')}>
+          onPress={() => navigation.navigate('createCategoryScreen')}>
           <Text style={styles.footerButtonTitle}>Create Category</Text>
         </TouchableOpacity>
       </View>

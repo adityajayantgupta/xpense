@@ -21,9 +21,9 @@ const dataModel = {
 
 export default function editItemScreen({route, navigation}) {
   const transaction = route.params.transaction;
-  const [title, setTitle] = useState('');
-  const [amount, setAmount] = useState('0');
-  const [selectedType, setSelectedType] = useState('spent');
+  const [title, setTitle] = useState(transaction.title);
+  const [amount, setAmount] = useState(transaction.amount);
+  const [selectedType, setSelectedType] = useState(transaction.type);
   const [category, setCategory] = useState({
     name: 'Uncategorized',
     iconName: 'checkmark-circle-outline',
@@ -32,9 +32,6 @@ export default function editItemScreen({route, navigation}) {
 
   useEffect(() => {
     let isSubscribed = true;
-    setTitle(transaction.title);
-    setAmount(transaction.amount);
-    setSelectedType(transaction.type);
     combineCategories();
     return () => (isSubscribed = false); // unsubscribe on unmount
   }, []);

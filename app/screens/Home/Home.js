@@ -112,7 +112,7 @@ export default function Home({navigation}) {
 
   const addAutoTransaction = (transaction, transactions, TIME_CONST) => {
     const TODAY = Date.now();
-    const timeDifference = parseInt(
+    var timeDifference = parseInt(
       (TODAY - transaction.lastTransactionDate) / TIME_CONST,
     );
     if (timeDifference >= 1) {
@@ -129,7 +129,6 @@ export default function Home({navigation}) {
       }
       transaction.lastTransactionDate = Date.now();
     }
-    console.log(transactions);
     return {transaction, transactions};
   };
 

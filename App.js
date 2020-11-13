@@ -13,6 +13,8 @@ import categoryScreen from './app/screens/Home/ItemScreen/categoryScreen';
 import createCategoryScreen from './app/screens/Home/ItemScreen/createCategoryScreen';
 import ItemDetailsScreen from './app/screens/Home/ItemScreen/itemDetailsScreen';
 import addAutoTransScreen from './app/screens/AutomatedTransactions/addAutoTransScreen';
+import autoTransDetailsScreen from './app/screens/AutomatedTransactions/autoTransDetailsScreen';
+import editAutoTransScreen from './app/screens/AutomatedTransactions/editAutoTransScreen';
 import {LogBox} from 'react-native';
 import {decode, encode} from 'base-64';
 if (!global.btoa) {
@@ -67,6 +69,14 @@ export default function App() {
         <Stack.Screen
           name="addAutoTransScreen"
           component={addAutoTransScreen}
+        />
+        <Stack.Screen
+          name="editAutoTransScreen"
+          component={editAutoTransScreen}
+        />
+        <Stack.Screen
+          name="autoTransDetailsScreen"
+          component={autoTransDetailsScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>

@@ -55,7 +55,7 @@ export default function AutomatedTransactions({navigation}) {
   };
 
   const handleItemDetails = (item) => {
-    // navigation.navigate('ItemDetailsScreen', {bill: item});
+    navigation.navigate('autoTransDetailsScreen', {autoTransaction: item});
   };
 
   const renderItem = ({item, index}) => {
@@ -78,6 +78,11 @@ export default function AutomatedTransactions({navigation}) {
           styles.billItemContainer,
           {backgroundColor: item.selected ? '#ff0000' : '#ffffff'},
         ]}
+        oonPress={() => {
+          if (multiselect) {
+            handleMultiSelect(item);
+          } else handleItemDetails(item);
+        }}
         onLongPress={() => {
           item.selected = true;
           setMultiselect(true);

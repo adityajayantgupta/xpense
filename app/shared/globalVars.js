@@ -76,7 +76,7 @@ const vars = {
     var RGBA = `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, ${alpha})`;
     return RGBA;
   },
-  formatDate: (UTCString) => {
+  getMonthName: (UTCString) => {
     const months = [
       'January',
       'February',
@@ -92,9 +92,8 @@ const vars = {
       'December',
     ];
     const dateObj = new Date(UTCString);
-    const date = dateObj.getDate();
     const month = months[dateObj.getMonth()];
-    return `${date} ${month}`;
+    return `${month}`;
   },
   docRef: firebase.firestore().collection('users'),
 };

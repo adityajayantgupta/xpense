@@ -316,7 +316,9 @@ export default function Home({navigation}) {
             keyExtractor={(item, index) => item + index}
             renderItem={renderItem}
             renderSectionHeader={({section: {date}}) => (
-              <Text style={styles.sectionHeader}>{vars.formatDate(date)}</Text>
+              <Text style={styles.sectionHeader}>
+                {new Date(date).getDate()} {vars.getMonthName(date)}
+              </Text>
             )}
             contentContainerStyle={{paddingBottom: 100}}
           />

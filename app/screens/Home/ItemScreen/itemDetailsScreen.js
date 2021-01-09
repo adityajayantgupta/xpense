@@ -107,7 +107,8 @@ export default function ItemDetailsScreen({route, navigation}) {
       <Text style={styles.title}>{transaction.title}</Text>
       {/* Transaction date and time */}
       <Text style={styles.transactionDate}>
-        {vars.formatDate(transaction.date)}・
+        {new Date(transaction.date).getDate()}{' '}
+        {vars.getMonthName(transaction.date)}・
         {new Date(transaction.date).getHours()}:
         {new Date(transaction.date).getMinutes()}
       </Text>

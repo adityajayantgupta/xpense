@@ -3,7 +3,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Home from './Home/Home';
 import AutomatedTransactions from './AutomatedTransactions/AutomatedTransactions';
-import Report from './Report';
+import Stats from './Stats/Stats';
 import vars from '../shared/globalVars';
 
 const Tab = createBottomTabNavigator();
@@ -18,7 +18,7 @@ export default function TabContainer({navigation}) {
             iconName = focused ? 'home' : 'home-outline';
           } else if (route.name === 'Schedule') {
             iconName = focused ? 'calendar' : 'calendar-outline';
-          } else if (route.name === 'Report') {
+          } else if (route.name === 'Stats') {
             iconName = focused ? 'pie-chart' : 'pie-chart-outline';
           }
           return <Ionicons name={iconName} size={size} color={color} />;
@@ -32,7 +32,7 @@ export default function TabContainer({navigation}) {
       }}>
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="Schedule" component={AutomatedTransactions} />
-      <Tab.Screen name="Report" component={Report} />
+      <Tab.Screen name="Stats" component={Stats} />
     </Tab.Navigator>
   );
 }

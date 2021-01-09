@@ -4,7 +4,7 @@ import {firebase} from '../../firebase/config';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import vars from '../../shared/globalVars';
 
-export default function ItemDetailsScreen({route, navigation}) {
+export default function autoTransDetailsScreen({route, navigation}) {
   const [autoTransaction, setAutoTransaction] = useState(
     route.params.autoTransaction,
   );

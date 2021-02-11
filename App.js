@@ -7,6 +7,7 @@ import {firebase} from './app/firebase/config';
 import TabContainer from './app/screens/TabContainer';
 import Login from './app/screens/Login';
 import Signup from './app/screens/Signup';
+import Search from './app/screens/Search';
 import addItemScreen from './app/screens/Home/ItemScreen/addItemScreen';
 import editItemScreen from './app/screens/Home/ItemScreen/editItemScreen';
 import categoryScreen from './app/screens/Home/ItemScreen/categoryScreen';
@@ -51,13 +52,14 @@ export default function App() {
         screenOptions={{
           headerShown: false,
         }}>
+        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="Signup" component={Signup} />
         <Stack.Screen
           name="App"
           component={TabContainer}
           style={{display: user ? 'flex' : 'none'}}
         />
-        <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="Signup" component={Signup} />
+        <Stack.Screen name="Search" component={Search} />
         <Stack.Screen name="addItemScreen" component={addItemScreen} />
         <Stack.Screen name="editItemScreen" component={editItemScreen} />
         <Stack.Screen name="categoryScreen" component={categoryScreen} />

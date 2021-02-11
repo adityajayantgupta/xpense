@@ -127,15 +127,6 @@ export default function ItemDetailsScreen({route, navigation}) {
       </Text>
       <View style={styles.actionButtonsContainer}>
         <Text style={styles.actionButtonWrapper}>
-          <TouchableOpacity style={styles.actionButton}>
-            <Ionicons
-              name="receipt"
-              style={[
-                styles.actionButtonIcon,
-                styles.actionButtonReceipt,
-              ]}></Ionicons>
-            <Text style={styles.actionButtonTitle}>See Receipt</Text>
-          </TouchableOpacity>
           <TouchableOpacity
             style={styles.actionButton}
             onPress={() => {

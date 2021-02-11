@@ -35,9 +35,7 @@ export default function OverviewChart() {
 
   // subscribe to data updates
   useEffect(() => {
-    const subscriber = firebase
-      .firestore()
-      .collection('users')
+    const subscriber = vars.docRef
       .doc(firebase.auth().currentUser.uid)
       .onSnapshot(formatChartData);
     return subscriber;
@@ -65,6 +63,8 @@ export default function OverviewChart() {
             },
           ],
         };
+        const ONE_DAY = 86400000;
+        const ONE_MONTH = ONE_DAY * 28;
         const CURRENT_MONTH = new Date(Date.now()).getMonth();
         const MONTHS = [
           'Jan',
@@ -85,12 +85,12 @@ export default function OverviewChart() {
         const FIRST_DATE = userData.transactions.reduce((prev, curr) =>
           prev.date < curr.date ? prev : curr,
         );
-        const FIRST_MONTH = new Date(FIRST_DATE.date).getMonth();
         for (
-          let month = CURRENT_MONTH, i = 0;
-          i < 6 && month >= FIRST_MONTH;
-          i++, month--
+          let i = 0, date = Date.now();
+          i < 6 && date >= FIRST_DATE.date;
+          i++, date = parseInt(date) - parseInt(ONE_MONTH)
         ) {
+          var month = new Date(date).getMonth();
           var totalMonthlyExpenditure = 0,
             totalMonthlyEarnings = 0;
           for (let transaction of userData.transactions) {
@@ -118,10 +118,11 @@ export default function OverviewChart() {
     <View>
       <LineChart
         data={data}
-        width={screenWidth - 60}
+        width={screenWidth}
         height={220}
         chartConfig={chartConfig}
         bezier
+        style={{paddingRight: 40}}
       />
     </View>
   );

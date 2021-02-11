@@ -39,9 +39,7 @@ export default function editAutoTransScreen({route, navigation}) {
   }, []);
 
   const combineCategories = () => {
-    firebase
-      .firestore()
-      .collection('users')
+    vars.docRef
       .doc(firebase.auth().currentUser.uid)
       .get()
       .then((doc) => {

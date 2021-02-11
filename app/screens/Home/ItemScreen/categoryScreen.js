@@ -11,9 +11,7 @@ export default function categoryScreen({route, navigation}) {
   // Concatenate user categories with default categories
   useEffect(() => {
     let isSubscribed = true;
-    firebase
-      .firestore()
-      .collection('users')
+    vars.docRef
       .doc(firebase.auth().currentUser.uid)
       .get()
       .then((doc) => {

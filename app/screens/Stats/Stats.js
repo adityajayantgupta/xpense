@@ -39,9 +39,7 @@ export default function Stats({navigation}) {
   ]);
 
   useEffect(() => {
-    const subscriber = firebase
-      .firestore()
-      .collection('users')
+    const subscriber = vars.docRef
       .doc(firebase.auth().currentUser.uid)
       .onSnapshot(getUserTransactions);
     return subscriber;
@@ -153,6 +151,7 @@ export default function Stats({navigation}) {
   };
   return (
     <View style={styles.container}>
+      <Text style={styles.screenHeader}>Stats</Text>
       <DatePicker
         style={{width: 200}}
         date={date}
@@ -275,11 +274,18 @@ export default function Stats({navigation}) {
 const styles = StyleSheet.create({
   container: {
     height: '100%',
-    padding: 20,
-    paddingTop: 30,
+    padding: 30,
     alignItems: 'center',
     paddingBottom: 0,
     backgroundColor: '#ffffff',
+  },
+  screenHeader: {
+    marginBottom: 0,
+    paddingBottom: 0,
+    fontSize: 25,
+    fontWeight: 'bold',
+    color: vars.colors.primary,
+    alignSelf: 'flex-start',
   },
   actionButtonsContainer: {
     marginTop: 20,
@@ -297,6 +303,6 @@ const styles = StyleSheet.create({
   },
   datePickerText: {
     fontSize: 20,
-    color: vars.colors.primary,
+    color: vars.colors.highlight,
   },
 });

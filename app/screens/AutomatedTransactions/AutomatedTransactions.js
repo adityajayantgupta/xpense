@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {View, Text, TouchableOpacity, FlatList, StyleSheet} from 'react-native';
 import {firebase} from '../../firebase/config';
-import OverviewChart from '../../components/OverviewChart';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import vars from '../../shared/globalVars';
 
@@ -22,18 +21,14 @@ export default function AutomatedTransactions({navigation}) {
 
   // subscribe to data updates
   useEffect(() => {
-    const subscriber = firebase
-      .firestore()
-      .collection('users')
+    const subscriber = vars.docRef
       .doc(firebase.auth().currentUser.uid)
       .onSnapshot(sortUserData);
     return subscriber;
   }, []);
 
   const sortUserData = () => {
-    firebase
-      .firestore()
-      .collection('users')
+    vars.docRef
       .doc(firebase.auth().currentUser.uid)
       .get()
       .then((doc) => {
@@ -43,9 +38,7 @@ export default function AutomatedTransactions({navigation}) {
       });
   };
   const combineCategories = () => {
-    firebase
-      .firestore()
-      .collection('users')
+    vars.docRef
       .doc(firebase.auth().currentUser.uid)
       .get()
       .then((doc) => {
@@ -127,7 +120,7 @@ export default function AutomatedTransactions({navigation}) {
             styles.topBarContainer,
             {display: multiselect ? 'none' : 'flex'},
           ]}>
-          <Text style={styles.headerText}>Automated Bills</Text>
+          <Text style={styles.screenHeader}>Automated Bills</Text>
           <Text style={styles.menuContainer}>
             <TouchableOpacity
               onPress={() => navigation.navigate('addAutoTransScreen')}>
@@ -180,10 +173,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 30,
   },
-  headerText: {
-    fontSize: 30,
-    fontWeight: '100',
-    color: '#000000',
+  screenHeader: {
+    fontSize: 25,
+    fontWeight: 'bold',
+    color: vars.colors.primary,
   },
   headerUsername: {
     fontWeight: 'bold',

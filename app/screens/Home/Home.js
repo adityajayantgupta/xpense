@@ -10,7 +10,6 @@ import {firebase} from '../../firebase/config';
 import OverviewChart from '../../components/OverviewChart';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import vars from '../../shared/globalVars';
-import {add} from 'react-native-reanimated';
 
 export default function Home({navigation}) {
   const placeholderData = {
@@ -42,9 +41,7 @@ export default function Home({navigation}) {
 
   // subscribe to data updates
   useEffect(() => {
-    const subscriber = firebase
-      .firestore()
-      .collection('users')
+    const subscriber = vars.docRef
       .doc(firebase.auth().currentUser.uid)
       .onSnapshot(sortUserData);
     return subscriber;
@@ -52,9 +49,7 @@ export default function Home({navigation}) {
 
   // check for automatic transactions
   useEffect(() => {
-    firebase
-      .firestore()
-      .collection('users')
+    vars.docRef
       .doc(firebase.auth().currentUser.uid)
       .get()
       .then((doc) => {
@@ -125,6 +120,7 @@ export default function Home({navigation}) {
           type: transaction.type,
         };
         transactions.push(dataModel);
+        console.log(transactions);
         dataModel.date -= TIME_CONST;
       }
       transaction.lastTransactionDate = Date.now();
@@ -133,9 +129,7 @@ export default function Home({navigation}) {
   };
 
   const sortUserData = () => {
-    firebase
-      .firestore()
-      .collection('users')
+    vars.docRef
       .doc(firebase.auth().currentUser.uid)
       .get()
       .then((doc) => {
@@ -183,23 +177,13 @@ export default function Home({navigation}) {
       .catch((err) => console.log(err));
   };
   const combineCategories = () => {
-    firebase
-      .firestore()
-      .collection('users')
+    vars.docRef
       .doc(firebase.auth().currentUser.uid)
       .get()
       .then((doc) => {
         setCategories(vars.defaultCategories.concat(doc.data().userCategories));
       })
       .catch((err) => console.log(err));
-  };
-
-  const handleLogout = () => {
-    firebase
-      .auth()
-      .signOut()
-      .then(navigation.navigate('Login'))
-      .catch((err) => alert('Error signing out!'));
   };
 
   const handleMultiSelect = (item) => {
@@ -287,26 +271,26 @@ export default function Home({navigation}) {
 
   return (
     <View style={styles.container}>
+      <View
+        style={[
+          styles.topBarContainer,
+          {display: multiselect ? 'none' : 'flex'},
+        ]}>
+        <Text style={styles.greetingText}>
+          Hello,
+          <Text style={styles.headerUsername}> {userData.fullName}</Text>
+        </Text>
+        <Text style={styles.menuContainer}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('addItemScreen')}>
+            <Ionicons name="add-outline" style={styles.topBarIcon} />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('Search')}>
+            <Ionicons name="search-outline" style={styles.topBarIcon} />
+          </TouchableOpacity>
+        </Text>
+      </View>
       <View style={styles.main}>
-        <View
-          style={[
-            styles.topBarContainer,
-            {display: multiselect ? 'none' : 'flex'},
-          ]}>
-          <Text style={styles.greetingText}>
-            Hello,
-            <Text style={styles.headerUsername}> {userData.fullName}</Text>
-          </Text>
-          <Text style={styles.menuContainer}>
-            <TouchableOpacity
-              onPress={() => navigation.navigate('addItemScreen')}>
-              <Ionicons name="add-outline" style={styles.topBarIcon} />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => handleLogout()}>
-              <Ionicons name="menu" style={styles.topBarIcon} />
-            </TouchableOpacity>
-          </Text>
-        </View>
         <View style={styles.overviewChart}>
           <OverviewChart></OverviewChart>
         </View>
@@ -331,6 +315,8 @@ export default function Home({navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    padding: 30,
+    paddingBottom: 0,
     backgroundColor: '#ffffff',
   },
   background: {
@@ -340,8 +326,7 @@ const styles = StyleSheet.create({
     backgroundColor: vars.colors.primary,
   },
   main: {
-    padding: 30,
-    paddingHorizontal: 30,
+    flex: 1,
   },
   topBarContainer: {
     flexDirection: 'row',
@@ -356,9 +341,11 @@ const styles = StyleSheet.create({
     textAlignVertical: 'center',
   },
   topBarIcon: {
+    paddingLeft: 10,
     color: vars.colors.primary,
     fontWeight: 'bold',
     fontSize: 30,
+    textAlignVertical: 'center',
   },
   greetingText: {
     fontSize: 30,
@@ -392,7 +379,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
   },
   overviewListContainer: {
-    height: '45%',
+    flex: 1,
   },
   item: {
     backgroundColor: '#f9c2ff',

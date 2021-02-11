@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {firebase} from '../firebase/config';
+import vars from '../shared/globalVars';
 
 export default function Signup({navigation}) {
   const [fullName, setFullName] = useState('');
@@ -60,6 +61,10 @@ export default function Signup({navigation}) {
       <KeyboardAwareScrollView
         style={{flex: 1, width: '100%'}}
         keyboardShouldPersistTaps="always">
+        <Image
+          source={require('../assets/logo-xpense.png')}
+          style={styles.logo}
+        />
         <TextInput
           style={styles.input}
           placeholder="Full Name"
@@ -120,12 +125,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
+    backgroundColor: '#ffffff',
   },
   title: {},
   logo: {
     flex: 1,
-    height: 120,
-    width: 90,
+    height: 150,
+    resizeMode: 'contain',
     alignSelf: 'center',
     margin: 30,
   },
@@ -133,7 +139,7 @@ const styles = StyleSheet.create({
     height: 48,
     borderRadius: 5,
     overflow: 'hidden',
-    backgroundColor: 'white',
+    backgroundColor: '#efefef',
     marginTop: 10,
     marginBottom: 10,
     marginLeft: 30,
@@ -141,7 +147,7 @@ const styles = StyleSheet.create({
     paddingLeft: 16,
   },
   button: {
-    backgroundColor: '#788eec',
+    backgroundColor: vars.colors.highlight,
     marginLeft: 30,
     marginRight: 30,
     marginTop: 20,

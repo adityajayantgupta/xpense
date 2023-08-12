@@ -28,5 +28,3 @@ You can set up auto-recurring transactions such as subscription charges, electri
 Xpense also provides the user with insights and statistics about their expenses over the last week, month or the whole year, divided into the categories they chose.
 
 <img src="https://user-images.githubusercontent.com/19838832/165719731-cc41cf76-5e55-435a-8982-d931d8c7305e.png" height="500">
-
-updated
